@@ -1,0 +1,36 @@
+version: '3.8'
+ 
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password  # Remplacez par un mot de passe sécurisé
+      MYSQL_DATABASE: items_database             # Nom de la base de données
+      MYSQL_USER: username               # Utilisateur MySQL
+      MYSQL_PASSWORD: password       # Mot de passe de l'utilisateur MySQL
+    ports:
+      - "3307:3307"
+    volumes:
+      - db_data:/var/lib/mysql
+ 
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://username:password@db/items_database
+ 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+ 
+volumes:
+  db_data:
