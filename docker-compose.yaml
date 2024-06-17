@@ -4,10 +4,10 @@ services:
   db:
     image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: root_password  # Remplacez par un mot de passe sécurisé
-      MYSQL_DATABASE: items_database             # Nom de la base de données
-      MYSQL_USER: username               # Utilisateur MySQL
-      MYSQL_PASSWORD: password       # Mot de passe de l'utilisateur MySQL
+      MYSQL_ROOT_PASSWORD: root_password  
+      MYSQL_DATABASE: app_db             
+      MYSQL_USER: user               
+      MYSQL_PASSWORD: app_password       
     ports:
       - "3307:3307"
     volumes:
@@ -24,7 +24,7 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: mysql+pymysql://username:password@db/items_database
+      DATABASE_URL: mysql+pymysql://user:app_password@db/app_db
  
   adminer:
     image: adminer
